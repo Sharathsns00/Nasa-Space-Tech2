@@ -1,0 +1,52 @@
+<!-- templates/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>NASA Space Biology Explorer</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>🚀 NASA Space Biology Explorer</h1>
+      <p class="sub">Experiments • Papers • Knowledge Graph • AI (OpenAI optional)</p>
+    </header>
+
+    <main>
+      <section class="left">
+        <div class="card">
+          <h2>Experiments</h2>
+          <div id="experiments"></div>
+        </div>
+
+        <div class="card">
+          <h2>Research Papers</h2>
+          <input id="paper-filter" placeholder="Filter by keyword (e.g., bone, plant, radiation)" />
+          <button id="filterBtn">Filter</button>
+          <div id="papers-list" class="papers-list"></div>
+        </div>
+
+        <div class="card">
+          <h2>Ask the AI</h2>
+          <input id="user-question" placeholder="Ask about papers or topics..." />
+          <button id="askBtn">Ask</button>
+          <div id="ai-response" class="ai-response"></div>
+        </div>
+      </section>
+
+      <section class="right">
+        <div class="card">
+          <h2>Knowledge Graph</h2>
+          <div id="network" style="height:640px;"></div>
+          <p class="hint">Click a paper node to open the paper. Click a topic node to highlight connected papers.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
