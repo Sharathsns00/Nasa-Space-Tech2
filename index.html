@@ -1,52 +1,143 @@
-<!-- templates/index.html -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>NASA Space Biology Explorer</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  <script src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Space Biology Explorer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="wrap">
+    <!-- Background Animation -->
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+
+    <!-- Header -->
     <header>
-      <h1>🚀 NASA Space Biology Explorer</h1>
-      <p class="sub">Experiments • Papers • Knowledge Graph • AI (OpenAI optional)</p>
+        <div class="container">
+            <div class="logo">
+                <h1>🚀 NASA Space Biology Explorer</h1>
+                <p class="tagline">Advancing Human Space Exploration Through Science</p>
+            </div>
+            <nav>
+                <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+                <button class="nav-btn" data-section="experiments">Experiments</button>
+                <button class="nav-btn" data-section="ai-assistant">AI Assistant</button>
+            </nav>
+        </div>
     </header>
 
-    <main>
-      <section class="left">
-        <div class="card">
-          <h2>Experiments</h2>
-          <div id="experiments"></div>
-        </div>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <h2>Mission Overview</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🧬</div>
+                    <div class="stat-value" id="total-experiments">0</div>
+                    <div class="stat-label">Total Experiments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔬</div>
+                    <div class="stat-value" id="total-categories">0</div>
+                    <div class="stat-label">Research Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-value">ISS</div>
+                    <div class="stat-label">Primary Platform</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-value" id="latest-date">2024</div>
+                    <div class="stat-label">Latest Research</div>
+                </div>
+            </div>
 
-        <div class="card">
-          <h2>Research Papers</h2>
-          <input id="paper-filter" placeholder="Filter by keyword (e.g., bone, plant, radiation)" />
-          <button id="filterBtn">Filter</button>
-          <div id="papers-list" class="papers-list"></div>
-        </div>
+            <div class="chart-container">
+                <h3>Research Distribution by Category</h3>
+                <canvas id="categoryChart"></canvas>
+            </div>
 
-        <div class="card">
-          <h2>Ask the AI</h2>
-          <input id="user-question" placeholder="Ask about papers or topics..." />
-          <button id="askBtn">Ask</button>
-          <div id="ai-response" class="ai-response"></div>
-        </div>
-      </section>
+            <div class="mission-info">
+                <h3>About This Mission</h3>
+                <p>The NASA Space Biology program studies how living organisms respond to the unique environment of space. This research is critical for understanding the challenges humans will face on long-duration missions to the Moon, Mars, and beyond.</p>
+                <p>Our dashboard provides AI-powered insights into decades of space biology research, making it easier for scientists, students, and space enthusiasts to explore and understand this vital field.</p>
+            </div>
+        </section>
 
-      <section class="right">
-        <div class="card">
-          <h2>Knowledge Graph</h2>
-          <div id="network" style="height:640px;"></div>
-          <p class="hint">Click a paper node to open the paper. Click a topic node to highlight connected papers.</p>
-        </div>
-      </section>
+        <!-- Experiments Section -->
+        <section id="experiments" class="section">
+            <div class="experiments-header">
+                <h2>Space Biology Experiments</h2>
+                <div class="filter-controls">
+                    <label for="category-filter">Filter by Category:</label>
+                    <select id="category-filter">
+                        <option value="all">All Categories</option>
+                        <option value="Botany">Botany</option>
+                        <option value="Human Physiology">Human Physiology</option>
+                        <option value="Microbiology">Microbiology</option>
+                        <option value="Physiology">Physiology</option>
+                        <option value="Genetics">Genetics</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="experiments-grid" class="experiments-grid">
+                <!-- Experiments will be loaded here -->
+            </div>
+        </section>
+
+        <!-- AI Assistant Section -->
+        <section id="ai-assistant" class="section">
+            <h2>AI Research Assistant</h2>
+            <div class="ai-container">
+                <div class="ai-info">
+                    <p>🤖 Ask me anything about NASA's space biology research! I can help you understand experiments, findings, and implications for future missions.</p>
+                </div>
+                
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="message assistant-message">
+                            <strong>AI Assistant:</strong> Hello! I'm your NASA Space Biology AI Assistant. Ask me about any experiments, organisms, or space biology topics!
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <input type="text" id="user-question" placeholder="Ask a question about space biology..." />
+                        <button id="ask-btn">Send</button>
+                    </div>
+
+                    <div class="suggested-questions">
+                        <p><strong>Try asking:</strong></p>
+                        <button class="suggestion-btn">What are the effects of microgravity on plants?</button>
+                        <button class="suggestion-btn">How does space affect bone density?</button>
+                        <button class="suggestion-btn">What organisms have been studied in space?</button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
-  </div>
 
-  <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <!-- Experiment Modal -->
+    <div id="experiment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body">
+                <!-- Experiment details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 NASA Space Biology Explorer | Empowering the Next Generation of Space Explorers</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
