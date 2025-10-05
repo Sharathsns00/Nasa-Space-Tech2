@@ -39,7 +39,7 @@ function showSection(sectionId) {
 // Dashboard
 async function loadDashboard() {
     try {
-        const response = await fetch(`${API_BASE}/stats`);
+        const response = await fetch(${API_BASE}/stats);
         const stats = await response.json();
         
         // Update stats
@@ -109,7 +109,7 @@ function createCategoryChart(categories) {
 // Experiments
 async function loadExperiments(category = 'all') {
     try {
-        const response = await fetch(`${API_BASE}/experiments?category=${category}`);
+        const response = await fetch(${API_BASE}/experiments?category=${category});
         const experiments = await response.json();
         
         const grid = document.getElementById('experiments-grid');
@@ -176,12 +176,12 @@ async function showExperimentDetails(expId) {
     
     try {
         // Get experiment details
-        const expResponse = await fetch(`${API_BASE}/experiment/${expId}`);
+        const expResponse = await fetch(${API_BASE}/experiment/${expId});
         const exp = await expResponse.json();
         
         // Get AI summary
         modalBody.innerHTML = '<div class="loading"></div><p style="text-align:center;">Generating AI summary...</p>';
-        const summaryResponse = await fetch(`${API_BASE}/summarize/${expId}`, {
+        const summaryResponse = await fetch(${API_BASE}/summarize/${expId}, {
             method: 'POST'
         });
         const summaryData = await summaryResponse.json();
@@ -214,7 +214,7 @@ async function showExperimentDetails(expId) {
             </div>
         `;
     } catch (error) {
-        modalBody.innerHTML = `<p style="color: #ff6b6b;">Error loading experiment details: ${error.message}</p>`;
+        modalBody.innerHTML = <p style="color: #ff6b6b;">Error loading experiment details: ${error.message}</p>;
     }
 }
 
@@ -264,7 +264,7 @@ async function askAI(question) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
     
     try {
-        const response = await fetch(`${API_BASE}/ask`, {
+        const response = await fetch(${API_BASE}/ask, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -281,19 +281,19 @@ async function askAI(question) {
         addMessage(data.answer, 'assistant');
     } catch (error) {
         document.getElementById('loading-message').remove();
-        addMessage(`Sorry, I encountered an error: ${error.message}. Please make sure your OpenAI API key is configured.`, 'assistant');
+        addMessage(Sorry, I encountered an error: ${error.message}. Please make sure your OpenAI API key is configured., 'assistant');
     }
 }
 
 function addMessage(text, sender) {
     const chatMessages = document.getElementById('chat-messages');
     const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${sender}-message`;
+    messageDiv.className = message ${sender}-message;
     
     if (sender === 'user') {
-        messageDiv.innerHTML = `<strong>You:</strong> ${text}`;
+        messageDiv.innerHTML = <strong>You:</strong> ${text};
     } else {
-        messageDiv.innerHTML = `<strong>AI Assistant:</strong> ${text}`;
+        messageDiv.innerHTML = <strong>AI Assistant:</strong> ${text};
     }
     
     chatMessages.appendChild(messageDiv);
