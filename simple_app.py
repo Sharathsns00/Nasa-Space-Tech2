@@ -8,7 +8,7 @@ import random
 app = Flask(__name__)
 
 # Configure OpenAI API
-openai.api_key = os.environ.get("OPENAI_API_KEY", "your-api-key-here")
+openai.api_key = os.environ.get("OPENAI_API_KEY", "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")
 
 def load_publications():
     try:
@@ -180,3 +180,4 @@ def get_knowledge_graph():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
